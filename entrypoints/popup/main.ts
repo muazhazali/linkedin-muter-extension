@@ -1,11 +1,12 @@
 import './style.css';
-import { keywordStorage, extensionEnabledStorage, hiddenCountStorage } from '@/utils/storage';
+import { keywordStorage, extensionEnabledStorage, hiddenCountStorage, showHiddenPostsStorage } from '@/utils/storage';
 
 const input = document.querySelector<HTMLInputElement>('#keyword-input')!;
 const addBtn = document.querySelector<HTMLButtonElement>('#add-btn')!;
 const list = document.querySelector<HTMLUListElement>('#keyword-list')!;
 const statusMsg = document.querySelector<HTMLSpanElement>('#status-msg')!;
 const toggle = document.querySelector<HTMLInputElement>('#extension-toggle')!;
+const showHiddenToggle = document.querySelector<HTMLInputElement>('#show-hidden-toggle')!;
 const hiddenCountEl = document.querySelector<HTMLSpanElement>('#hidden-count')!;
 
 // Function to render the list
@@ -38,6 +39,10 @@ async function renderList() {
 // Handle Toggle
 toggle.addEventListener('change', async () => {
   await extensionEnabledStorage.setValue(toggle.checked);
+});
+
+showHiddenToggle.addEventListener('change', async () => {
+  await showHiddenPostsStorage.setValue(showHiddenToggle.checked);
 });
 
 // Add keyword
@@ -77,6 +82,7 @@ function showStatus(msg: string, isError = false) {
 // Initial render
 async function init() {
   toggle.checked = await extensionEnabledStorage.getValue();
+  showHiddenToggle.checked = await showHiddenPostsStorage.getValue();
   renderList();
 }
 

@@ -104,6 +104,41 @@ input:checked+.slider:before {
   justify-content: center;
 }
 
+.settings-group {
+  background: var(--card-bg);
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.setting-label {
+  font-size: 0.9rem;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.switch.mini {
+  width: 34px;
+  height: 18px;
+}
+
+.switch.mini .slider:before {
+  height: 12px;
+  width: 12px;
+  left: 3px;
+  bottom: 3px;
+}
+
+.switch.mini input:checked+.slider:before {
+  transform: translateX(16px);
+}
+
 .stat-item {
   display: flex;
   flex-direction: column;

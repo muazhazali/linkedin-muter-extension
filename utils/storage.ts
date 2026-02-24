@@ -18,3 +18,10 @@ export const hiddenCountStorage = storage.defineItem<number>(
         defaultValue: 0,
     }
 );
+
+export const showHiddenPostsStorage = storage.defineItem<boolean>(
+    'local:showHiddenPosts',
+    {
+        defaultValue: false,
+    }
+);

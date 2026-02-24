@@ -1,4 +1,4 @@
-import { keywordStorage, extensionEnabledStorage, hiddenCountStorage } from '@/utils/storage';
+import { keywordStorage, extensionEnabledStorage, hiddenCountStorage, showHiddenPostsStorage } from '@/utils/storage';
 
 export default defineContentScript({
   matches: ['*://*.linkedin.com/*'],
@@ -7,6 +7,7 @@ export default defineContentScript({
 
     let keywords = await keywordStorage.getValue();
     let isEnabled = await extensionEnabledStorage.getValue();
+    let showHidden = await showHiddenPostsStorage.getValue();
     let sessionHiddenCount = 0;
 
     // Set of processed post URNs to avoid double counting
@@ -18,39 +19,49 @@ export default defineContentScript({
       await hiddenCountStorage.setValue(current + increment);
     };
 
-    // Function to hide a post
+    // Function to hide or blur a post
     const processPost = (post: HTMLElement) => {
-      const postUrn = post.getAttribute('data-urn') || post.innerText.substring(0, 50); // Fallback to start of text if no URN
+      const postUrn = post.getAttribute('data-urn') || post.innerText.substring(0, 50);
+
+      const resetStyle = () => {
+        post.style.display = '';
+        post.style.filter = '';
+        post.style.opacity = '';
+        post.style.pointerEvents = '';
+      };
 
       if (!isEnabled) {
-        if (post.style.display === 'none') {
-          post.style.display = '';
-          if (hiddenPostsSet.has(postUrn)) {
-            hiddenPostsSet.delete(postUrn);
-            updateGlobalCount(-1);
-          }
+        resetStyle();
+        if (hiddenPostsSet.has(postUrn)) {
+          hiddenPostsSet.delete(postUrn);
+          updateGlobalCount(-1);
         }
         return;
       }
 
       const text = post.innerText.toLowerCase();
-      const shouldHide = keywords.some((word: string) => text.includes(word.toLowerCase()));
+      const shouldMute = keywords.some((word: string) => text.includes(word.toLowerCase()));
 
-      if (shouldHide) {
-        if (post.style.display !== 'none') {
+      if (shouldMute) {
+        if (!hiddenPostsSet.has(postUrn)) {
+          hiddenPostsSet.add(postUrn);
+          updateGlobalCount(1);
+        }
+
+        if (showHidden) {
+          post.style.display = '';
+          post.style.filter = 'blur(10px) grayscale(100%)';
+          post.style.opacity = '0.5';
+          post.style.pointerEvents = 'none';
+          post.style.transition = 'filter 0.3s ease, opacity 0.3s ease';
+        } else {
           post.style.display = 'none';
-          if (!hiddenPostsSet.has(postUrn)) {
-            hiddenPostsSet.add(postUrn);
-            updateGlobalCount(1);
-          }
         }
       } else {
-        if (post.style.display === 'none') {
-          post.style.display = '';
-          if (hiddenPostsSet.has(postUrn)) {
-            hiddenPostsSet.delete(postUrn);
-            updateGlobalCount(-1);
-          }
+        if (hiddenPostsSet.has(postUrn)) {
+          resetStyle();
+          hiddenPostsSet.delete(postUrn);
+          updateGlobalCount(-1);
         }
       }
     };
@@ -83,6 +94,12 @@ export default defineContentScript({
     // Watch for toggle changes
     extensionEnabledStorage.watch((newVal) => {
       isEnabled = newVal ?? true;
+      scanAllPosts();
+    });
+
+    // Watch for show hidden changes
+    showHiddenPostsStorage.watch((newVal) => {
+      showHidden = newVal ?? false;
       scanAllPosts();
     });
   },

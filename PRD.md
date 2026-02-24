@@ -20,7 +20,8 @@
 * **Word Input:** A text field to add new keywords.
 * **Keyword List:** Display all currently muted words.
 * **Delete Action:** Remove individual words from the list.
-* **Persistence:** All keywords must persist across browser sessions using `wxt/storage`.
+*   **Persistence:** All keywords must persist across browser sessions using `wxt/storage`.
+*   **Reveal Mode:** A toggle to choose between hiding matching posts completely or showing them with a blur/fade visual indicator.
 
 ---
 
