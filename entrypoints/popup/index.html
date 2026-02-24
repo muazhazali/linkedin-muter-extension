@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LinkedIn Muter</title>
-  </head>
-  <body>
-    <div id="app">
-      <header>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LinkedIn Muter</title>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <div class="header-top">
         <h1>LinkedIn Muter</h1>
-        <p class="subtitle">Focus on what matters</p>
-      </header>
-
-      <div class="input-group">
-        <input type="text" id="keyword-input" placeholder="Add a word to mute..." />
-        <button id="add-btn">Add</button>
+        <label class="switch">
+          <input type="checkbox" id="extension-toggle">
+          <span class="slider round"></span>
+        </label>
       </div>
+      <p class="subtitle">Focus on what matters</p>
+    </header>
 
-      <div class="list-container">
-        <ul id="keyword-list">
-          <!-- Keywords will be injected here -->
-        </ul>
+    <div class="stats-container">
+      <div class="stat-item">
+        <span class="stat-label">Hidden Posts</span>
+        <span id="hidden-count" class="stat-value">0</span>
       </div>
-
-      <footer>
-        <span id="status-msg"></span>
-      </footer>
     </div>
-    <script type="module" src="./main.ts"></script>
-  </body>
+
+    <div class="input-group">
+      <input type="text" id="keyword-input" placeholder="Add a word to mute..." />
+      <button id="add-btn">Add</button>
+    </div>
+
+    <div class="list-container">
+      <ul id="keyword-list">
+        <!-- Keywords will be injected here -->
+      </ul>
+    </div>
+
+    <footer>
+      <span id="status-msg"></span>
+    </footer>
+  </div>
+  <script type="module" src="./main.ts"></script>
+</body>
+
 </html>
