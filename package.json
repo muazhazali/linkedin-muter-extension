@@ -1,6 +1,6 @@
 {
-  "name": "wxt-starter",
-  "description": "manifest.json description",
+  "name": "linkedin-muter",
+  "description": "Chrome extension to mute/hide LinkedIn posts containing user-defined keywords.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
