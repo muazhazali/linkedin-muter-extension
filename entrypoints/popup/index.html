@@ -35,10 +35,21 @@
           <span class="slider round"></span>
         </label>
       </div>
+      <div class="setting-item">
+        <span class="setting-label">Mute sponsored posts?</span>
+        <label class="switch mini">
+          <input type="checkbox" id="mute-sponsored-toggle">
+          <span class="slider round"></span>
+        </label>
+      </div>
     </div>
 
     <div class="input-group">
-      <input type="text" id="keyword-input" placeholder="Add a word to mute..." />
+      <input type="text" id="keyword-input" placeholder="Add keyword or /regex/..." />
+      <label class="regex-label" title="Enable regex mode">
+        <input type="checkbox" id="regex-toggle">
+        <span class="regex-badge">.*</span>
+      </label>
       <button id="add-btn">Add</button>
     </div>
 

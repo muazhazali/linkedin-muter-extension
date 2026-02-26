@@ -1,7 +1,13 @@
-export const keywordStorage = storage.defineItem<string[]>(
+export interface KeywordEntry {
+    pattern: string;
+    isRegex: boolean;
+    count: number;
+}
+
+export const keywordStorage = storage.defineItem<KeywordEntry[]>(
     'local:keywords',
     {
-        defaultValue: ['ai'],
+        defaultValue: [{ pattern: 'ai', isRegex: false, count: 0 }],
     }
 );
 
@@ -23,5 +29,12 @@ export const showHiddenPostsStorage = storage.defineItem<boolean>(
     'local:showHiddenPosts',
     {
         defaultValue: false,
+    }
+);
+
+export const muteSponsoredStorage = storage.defineItem<boolean>(
+    'local:muteSponsored',
+    {
+        defaultValue: true,
     }
 );
