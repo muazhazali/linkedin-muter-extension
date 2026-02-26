@@ -8,7 +8,9 @@ export default defineContentScript({
     let keywords = await keywordStorage.getValue();
     let isEnabled = await extensionEnabledStorage.getValue();
     let showHidden = await showHiddenPostsStorage.getValue();
-    let sessionHiddenCount = 0;
+
+    // Reset count at the start of each session
+    await hiddenCountStorage.setValue(0);
 
     // Set of processed post URNs to avoid double counting
     const hiddenPostsSet = new Set<string>();
