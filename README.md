@@ -1,69 +1,58 @@
-# 🚫 LinkedIn Muter
+# LinkedIn Muter
 
-LinkedIn Muter is a powerful, lightweight browser extension designed to help you reclaim your LinkedIn feed. Tired of seeing the same repetitive corporate jargon, political debates, or specific topics you'd rather avoid? This extension puts you back in control by automatically hiding posts that contain keywords you choose.
+A lightweight browser extension to reclaim your LinkedIn feed by automatically hiding posts that match keywords or regex patterns you define.
 
-## ✨ Key Features
+## Features
 
-- **🎯 Precision Filtering**: Instantly hides posts containing your blacklisted keywords.
-- **🔄 Infinite Scroll Support**: Uses `MutationObserver` to ensure new posts are filtered in real-time as you scroll.
-- **⚡ Dynamic Updates**: Changes take effect immediately. No need to refresh your page when you add or remove keywords.
-- **🕵️ Reveal Mode**: Choose between hiding posts completely or applying a subtle blur effect so you still know something was filtered.
-- **💾 Persistent Storage**: Your keyword list is securely saved across sessions using the Chrome Storage API.
-- **🎨 Modern UI**: A clean, intuitive management popup to easily manage your muted words.
+- **Keyword & Regex Filtering**: Filter posts by plain keywords or full regular expressions.
+- **Per-Rule Hit Counts**: Each rule shows how many posts it has muted.
+- **Click-to-Reveal**: In reveal mode, click a blurred post to temporarily show it.
+- **Sponsored Post Muting**: Optionally mute all sponsored/promoted posts.
+- **Two Muting Modes**: Completely hide posts (`display: none`) or blur/grayscale them so you know something was filtered.
+- **Infinite Scroll Support**: Uses `MutationObserver` to filter new posts in real-time as you scroll.
+- **Dynamic Updates**: Changes take effect immediately — no page refresh needed.
+- **Persistent Storage**: Settings and keyword list are saved across sessions via the Chrome Storage API.
 
-## 🚀 Local Development
-
-To get started with development or run the extension locally from source, follow these steps:
+## Local Development
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (Latest LTS recommended)
-- [pnpm](https://pnpm.io/) (Preferred package manager)
+- [pnpm](https://pnpm.io/)
 
-### Installation
+### Setup
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/LCD/linkedin-muter.git
-   cd linkedin-muter
-   ```
+```bash
+git clone https://github.com/LCD/linkedin-muter.git
+cd linkedin-muter
+pnpm install
+```
 
-2. **Install dependencies:**
-   ```bash
-   pnpm install
-   ```
+### Commands
 
-### Running Locally
+```bash
+pnpm dev              # Dev server with hot reload (opens Chrome with extension loaded)
+pnpm dev:firefox      # Dev server for Firefox
+pnpm build            # Production build → .output/chrome-mv3/
+pnpm build:firefox    # Production build for Firefox
+pnpm zip              # Build and zip for Chrome Web Store submission
+pnpm compile          # TypeScript type-check only
+```
 
-1. **Start the development server:**
-   ```bash
-   pnpm dev
-   ```
-   This will start the WXT development server and automatically open a browser instance with the extension pre-loaded.
+### Loading manually in Chrome
 
-2. **Build for production:**
-   ```bash
-   pnpm build
-   ```
-   The production-ready files will be generated in the `.output` directory.
+1. Go to `chrome://extensions/`
+2. Enable **Developer mode** (top right)
+3. Click **Load unpacked**
+4. Select the `.output/chrome-mv3` folder
 
-3. **Loading manually into Chrome:**
-   If you need to load it manually:
-   - Go to `chrome://extensions/`
-   - Enable **Developer mode** (top right).
-   - Click **Load unpacked**.
-   - Select the `.output/chrome-mv3` folder (after running `pnpm build` or `pnpm dev`).
+## Tech Stack
 
-## 🛠️ Tech Stack
+- **[WXT](https://wxt.dev/)** — Web Extension Framework (Manifest V3)
+- **TypeScript**
+- **Vanilla CSS**
+- **Chrome Storage API**
 
-- **[WXT](https://wxt.dev/)**: Next-gen Web Extension Framework.
-- **TypeScript**: For robust and type-safe code.
-- **Vanilla CSS**: Clean and performant styling.
-- **Chrome Storage API**: For persistent user preferences.
+## Contributing
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open an issue or submit a pull request if you have ideas for improvements or new features.
-
----
-*Made with ❤️ to improve your LinkedIn experience.*
+Contributions are welcome. Open an issue or submit a pull request.
