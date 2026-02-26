@@ -40,7 +40,10 @@ export default defineContentScript({
       }
 
       const text = post.innerText.toLowerCase();
-      const shouldMute = keywords.some((word: string) => text.includes(word.toLowerCase()));
+      const shouldMute = keywords.some((word: string) => {
+        const escaped = word.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`\\b${escaped}\\b`).test(text);
+      });
 
       if (shouldMute) {
         if (!hiddenPostsSet.has(postUrn)) {
